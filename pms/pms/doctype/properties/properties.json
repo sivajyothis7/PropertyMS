@@ -1,0 +1,208 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "field:property_name",
+ "creation": "2023-03-28 17:38:31.476067",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "basic_information_section",
+  "property_name",
+  "email",
+  "property_type",
+  "column_break_tvw8w",
+  "company",
+  "mobile",
+  "status",
+  "location_details_section",
+  "state",
+  "city",
+  "zip_code",
+  "column_break_ijvhr",
+  "district",
+  "locality",
+  "property_details_section",
+  "total_units",
+  "number_of_floors",
+  "column_break_hufbv",
+  "total_area",
+  "number_of_parking",
+  "more_information_section",
+  "amenity_name",
+  "electricity_account_number",
+  "water_account_number",
+  "section_break_nxedv",
+  "property_units"
+ ],
+ "fields": [
+  {
+   "fieldname": "basic_information_section",
+   "fieldtype": "Section Break",
+   "label": "BASIC INFORMATION"
+  },
+  {
+   "fieldname": "property_name",
+   "fieldtype": "Data",
+   "label": "Property Name",
+   "unique": 1
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email"
+  },
+  {
+   "fieldname": "mobile",
+   "fieldtype": "Int",
+   "label": "Mobile"
+  },
+  {
+   "fieldname": "property_type",
+   "fieldtype": "Link",
+   "label": "Property Type",
+   "options": "Property Type"
+  },
+  {
+   "fieldname": "column_break_tvw8w",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Status",
+   "options": "Available\nNot Available"
+  },
+  {
+   "fieldname": "location_details_section",
+   "fieldtype": "Section Break",
+   "label": "LOCATION DETAILS"
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Data",
+   "label": "State"
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "label": "City"
+  },
+  {
+   "fieldname": "column_break_ijvhr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "district",
+   "fieldtype": "Data",
+   "label": "District"
+  },
+  {
+   "fieldname": "locality",
+   "fieldtype": "Data",
+   "label": "Locality"
+  },
+  {
+   "fieldname": "zip_code",
+   "fieldtype": "Int",
+   "label": "Zip Code"
+  },
+  {
+   "fieldname": "property_details_section",
+   "fieldtype": "Section Break",
+   "label": "PROPERTY DETAILS"
+  },
+  {
+   "fieldname": "number_of_floors",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Number of Floors"
+  },
+  {
+   "fieldname": "number_of_parking",
+   "fieldtype": "Int",
+   "label": "Number of parking"
+  },
+  {
+   "fieldname": "total_area",
+   "fieldtype": "Float",
+   "label": "Total Area"
+  },
+  {
+   "fieldname": "more_information_section",
+   "fieldtype": "Section Break",
+   "label": "MORE INFORMATION"
+  },
+  {
+   "fieldname": "amenity_name",
+   "fieldtype": "Table",
+   "in_standard_filter": 1,
+   "label": "Amenity Name",
+   "options": "Property Amenities",
+   "search_index": 1
+  },
+  {
+   "fieldname": "water_account_number",
+   "fieldtype": "Int",
+   "label": "Water Account Number"
+  },
+  {
+   "fieldname": "electricity_account_number",
+   "fieldtype": "Int",
+   "label": "Electricity Account Number"
+  },
+  {
+   "fieldname": "total_units",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Total Units"
+  },
+  {
+   "fieldname": "column_break_hufbv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_nxedv",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "property_units",
+   "fieldtype": "Table",
+   "in_standard_filter": 1,
+   "label": "Property Units",
+   "options": "Property Units"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-03-30 12:05:53.217596",
+ "modified_by": "Administrator",
+ "module": "Pms",
+ "name": "Properties",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

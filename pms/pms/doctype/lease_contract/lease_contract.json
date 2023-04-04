@@ -1,0 +1,237 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:{property_name}-{unit_name}",
+ "creation": "2023-03-29 14:15:52.315745",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "main_data_section",
+  "company",
+  "rent_start_date",
+  "lease_customer",
+  "column_break_s0avw",
+  "writing_date",
+  "rent_end_date",
+  "notice_period",
+  "lease_unit_details_section",
+  "property_name",
+  "unit_name",
+  "column_break_gzvjm",
+  "property_type",
+  "unit_type",
+  "lease_item_table_section",
+  "lease_item",
+  "payment_schedule_section",
+  "lease_payment_schedule",
+  "security_deposit_details_section",
+  "security_deposit",
+  "column_break_piaov",
+  "security_deposit_status",
+  "other_lease_details_section",
+  "agreement_status",
+  "witness_2",
+  "stamp_duty_paid_by_tenant",
+  "column_break_ybch2",
+  "witness_1",
+  "upload_agreement_proof",
+  "amended_from"
+ ],
+ "fields": [
+  {
+   "fieldname": "main_data_section",
+   "fieldtype": "Section Break",
+   "label": "MAIN DATA"
+  },
+  {
+   "fieldname": "company",
+   "fieldtype": "Link",
+   "label": "Company",
+   "options": "Company"
+  },
+  {
+   "fieldname": "rent_start_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Rent Start Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "notice_period",
+   "fieldtype": "Int",
+   "label": "Notice Period"
+  },
+  {
+   "fieldname": "column_break_s0avw",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "writing_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Writing Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "rent_end_date",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Rent End Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "lease_customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Lease Customer",
+   "options": "Tenant"
+  },
+  {
+   "fieldname": "lease_unit_details_section",
+   "fieldtype": "Section Break",
+   "label": "LEASE UNIT DETAILS"
+  },
+  {
+   "fieldname": "property_name",
+   "fieldtype": "Link",
+   "label": "Property Name",
+   "options": "Properties"
+  },
+  {
+   "fieldname": "unit_name",
+   "fieldtype": "Link",
+   "label": "Unit Name",
+   "options": "Unit"
+  },
+  {
+   "fieldname": "column_break_gzvjm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "property_type",
+   "fieldtype": "Link",
+   "label": "Property Type",
+   "options": "Property Type"
+  },
+  {
+   "fieldname": "unit_type",
+   "fieldtype": "Link",
+   "label": "Unit Type",
+   "options": "Unit Types"
+  },
+  {
+   "fieldname": "lease_item_table_section",
+   "fieldtype": "Section Break",
+   "label": "LEASE ITEM TABLE"
+  },
+  {
+   "fieldname": "lease_item",
+   "fieldtype": "Table",
+   "label": "Lease Item",
+   "options": "Lease Items"
+  },
+  {
+   "fieldname": "payment_schedule_section",
+   "fieldtype": "Section Break",
+   "label": "PAYMENT SCHEDULE"
+  },
+  {
+   "fieldname": "lease_payment_schedule",
+   "fieldtype": "Table",
+   "label": "Lease Payment Schedule",
+   "options": "Lease Payment Schedule"
+  },
+  {
+   "fieldname": "security_deposit_details_section",
+   "fieldtype": "Section Break",
+   "label": "SECURITY DEPOSIT DETAILS"
+  },
+  {
+   "fieldname": "security_deposit",
+   "fieldtype": "Currency",
+   "label": "Security Deposit"
+  },
+  {
+   "fieldname": "column_break_piaov",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "security_deposit_status",
+   "fieldtype": "Select",
+   "label": "Security Deposit Status",
+   "options": "Received\nReceived in part\nReturn in part\nReturned\nRecovered for rent\nRecovered for repairs\nNot required\nNot Received"
+  },
+  {
+   "fieldname": "other_lease_details_section",
+   "fieldtype": "Section Break",
+   "label": "OTHER LEASE DETAILS"
+  },
+  {
+   "fieldname": "upload_agreement_proof",
+   "fieldtype": "Attach",
+   "label": "Upload Agreement Proof"
+  },
+  {
+   "fieldname": "column_break_ybch2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "stamp_duty_paid_by_tenant",
+   "fieldtype": "Check",
+   "label": "Stamp duty paid by tenant"
+  },
+  {
+   "fieldname": "witness_1",
+   "fieldtype": "Data",
+   "label": "Witness 1"
+  },
+  {
+   "fieldname": "witness_2",
+   "fieldtype": "Data",
+   "label": "Witness 2"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Lease Contract",
+   "print_hide": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "agreement_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Agreement Status",
+   "options": "Signed agreement received\nAgreement Cancelled"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2023-04-03 10:20:57.737614",
+ "modified_by": "Administrator",
+ "module": "Pms",
+ "name": "Lease Contract",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}

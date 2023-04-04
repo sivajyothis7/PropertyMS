@@ -1,0 +1,58 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "L-ITM.####",
+ "creation": "2023-03-29 15:59:01.361850",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "lease_item",
+  "frequency",
+  "amount",
+  "paid_by",
+  "document_type"
+ ],
+ "fields": [
+  {
+   "fieldname": "lease_item",
+   "fieldtype": "Link",
+   "label": "Lease Item",
+   "options": "Item"
+  },
+  {
+   "fieldname": "frequency",
+   "fieldtype": "Select",
+   "label": "Frequency",
+   "options": "Monthly\nQuarterly\n6 months\nAnnually"
+  },
+  {
+   "fieldname": "amount",
+   "fieldtype": "Currency",
+   "label": "Amount"
+  },
+  {
+   "fieldname": "paid_by",
+   "fieldtype": "Link",
+   "label": "Paid By",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "document_type",
+   "fieldtype": "Select",
+   "label": "Document Type",
+   "options": "Sales Invoice\nSales Order"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2023-03-29 15:59:01.361850",
+ "modified_by": "Administrator",
+ "module": "Pms",
+ "name": "Lease Items",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}
