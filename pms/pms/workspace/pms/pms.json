@@ -52,6 +52,15 @@
   {
    "hidden": 0,
    "is_query_report": 0,
+   "label": "Maintenance List",
+   "link_to": "Maintenance List",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
    "label": "Main Setup",
    "link_type": "DocType",
    "onboard": 0,
@@ -118,9 +127,18 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Sales Invoice",
+   "link_to": "Sales Invoice",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
- "modified": "2023-04-03 10:07:31.386183",
+ "modified": "2023-04-09 18:37:50.017463",
  "modified_by": "Administrator",
  "module": "Pms",
  "name": "PMS",

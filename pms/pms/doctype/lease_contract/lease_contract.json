@@ -139,6 +139,7 @@
   {
    "fieldname": "lease_payment_schedule",
    "fieldtype": "Table",
+   "in_standard_filter": 1,
    "label": "Lease Payment Schedule",
    "options": "Lease Payment Schedule"
   },
@@ -212,7 +213,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-04-03 10:20:57.737614",
+ "modified": "2023-04-05 15:12:50.693201",
  "modified_by": "Administrator",
  "module": "Pms",
  "name": "Lease Contract",

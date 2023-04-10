@@ -10,7 +10,7 @@ class LeaseContract(Document):
 		
 
 		if self.agreement_status=="Signed agreement received":
-			self.validate_agreement_received()
+			# self.validate_agreement_received()
 			unit=frappe.get_doc("Unit",self.unit_name)
 			unit.status="Leased"
 			unit.save()
@@ -38,11 +38,11 @@ class LeaseContract(Document):
 			tenant_doc.save()
 
 
-	def validate_agreement_received(self):
+	# def validate_agreement_received(self):
 
-		unit=frappe.get_doc("Unit",self.unit_name)
-		if unit.status=="Leased":
-			frappe.throw("This Unit is Already Leased")
+	# 	unit=frappe.get_doc("Unit",self.unit_name)
+	# 	if unit.status=="Leased":
+	# 		frappe.throw("This Unit is Already Leased")
 
 
 	def validate_agreement_cancelled(self):
