@@ -19,7 +19,7 @@
   "column_break_pqxvf",
   "priority",
   "section_break_zozum",
-  "purposes",
+  "maintenance_details",
   "more_information_section",
   "remarks",
   "column_break_xfohw",
@@ -43,8 +43,11 @@
   {
    "fieldname": "tenant",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Tenant",
-   "options": "Customer"
+   "options": "Customer",
+   "reqd": 1
   },
   {
    "fieldname": "property",
@@ -104,12 +107,6 @@
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "purposes",
-   "fieldtype": "Table",
-   "label": "Purposes",
-   "options": "Maintenance Visit Purpose"
-  },
-  {
    "fieldname": "more_information_section",
    "fieldtype": "Section Break",
    "label": "More Information"
@@ -117,7 +114,7 @@
   {
    "fieldname": "remarks",
    "fieldtype": "Small Text",
-   "label": "Remarks"
+   "label": "Remarks About Issue"
   },
   {
    "fieldname": "column_break_xfohw",
@@ -132,6 +129,7 @@
   {
    "fieldname": "contact_info_section",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Contact Info"
   },
   {
@@ -161,11 +159,17 @@
    "fieldtype": "Link",
    "label": "Customer Group",
    "options": "Customer Group"
+  },
+  {
+   "fieldname": "maintenance_details",
+   "fieldtype": "Table",
+   "label": "Maintenance Details",
+   "options": "Maintenance Details"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-04-05 14:12:24.316799",
+ "modified": "2023-04-13 08:56:07.538045",
  "modified_by": "Administrator",
  "module": "Pms",
  "name": "Maintenance List",

@@ -136,9 +136,18 @@
    "link_type": "DocType",
    "onboard": 0,
    "type": "Link"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "General Ledger",
+   "link_to": "General Ledger",
+   "link_type": "Report",
+   "onboard": 0,
+   "type": "Link"
   }
  ],
- "modified": "2023-04-09 18:37:50.017463",
+ "modified": "2023-04-13 09:06:06.593289",
  "modified_by": "Administrator",
  "module": "Pms",
  "name": "PMS",
