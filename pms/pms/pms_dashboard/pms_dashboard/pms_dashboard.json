@@ -1,0 +1,46 @@
+{
+ "cards": [
+  {
+   "card": "Available Units"
+  },
+  {
+   "card": "Leased Units-1"
+  },
+  {
+   "card": "Tenant Data"
+  },
+  {
+   "card": "Maintenance List"
+  }
+ ],
+ "charts": [
+  {
+   "chart": "TOTAL UNITS",
+   "width": "Half"
+  },
+  {
+   "chart": "LEASE CONTRACTS",
+   "width": "Half"
+  },
+  {
+   "chart": "Unit Availability",
+   "width": "Half"
+  },
+  {
+   "chart": "Properties",
+   "width": "Half"
+  }
+ ],
+ "creation": "2023-03-30 16:13:24.539518",
+ "dashboard_name": "PMS DASHBOARD",
+ "docstatus": 0,
+ "doctype": "Dashboard",
+ "idx": 0,
+ "is_default": 1,
+ "is_standard": 1,
+ "modified": "2023-04-18 18:31:49.844682",
+ "modified_by": "Administrator",
+ "module": "Pms",
+ "name": "PMS DASHBOARD",
+ "owner": "Administrator"
+}
