@@ -124,7 +124,6 @@
   {
    "fieldname": "lease_item_table_section",
    "fieldtype": "Section Break",
-   "hidden": 1,
    "label": "LEASE ITEM TABLE"
   },
   {
@@ -215,7 +214,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-04-13 09:47:01.017251",
+ "modified": "2023-04-20 16:46:47.155416",
  "modified_by": "Administrator",
  "module": "Pms",
  "name": "Lease Contract",
