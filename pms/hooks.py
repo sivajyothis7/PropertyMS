@@ -95,6 +95,25 @@ app_license = "MIT"
 # ---------------
 # Hook on document methods and events
 
+fixtures = [
+    {
+        "doctype": "Custom Field",
+        "filters": [
+            [
+                "name",
+                "in",
+                (
+                    "Sales Invoice-lease_data",
+                    "Payment Entry-column_break_qrf7w",
+                    "Payment Entry-cheque_number",
+                    "Payment Entry-cheque_status",
+            
+                ),
+            ]
+        ],
+    }
+]
+
 # doc_events = {
 #	"*": {
 #		"on_update": "method",

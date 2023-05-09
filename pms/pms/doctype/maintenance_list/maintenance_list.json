@@ -46,7 +46,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Tenant",
-   "options": "Customer",
+   "options": "Tenant",
    "reqd": 1
   },
   {
@@ -169,7 +169,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-04-13 08:56:07.538045",
+ "modified": "2023-05-03 16:32:09.644199",
  "modified_by": "Administrator",
  "module": "Pms",
  "name": "Maintenance List",
@@ -183,7 +183,19 @@
    "print": 1,
    "read": 1,
    "report": 1,
-   "role": "System Manager",
+   "role": "Administrator",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Tenant",
    "share": 1,
    "write": 1
   }

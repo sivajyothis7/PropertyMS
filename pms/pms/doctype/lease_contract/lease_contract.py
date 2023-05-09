@@ -4,8 +4,10 @@
 import frappe
 from frappe.model.document import Document
 from frappe.utils import add_days, today, getdate, add_months, get_datetime, now
+from dateutil.relativedelta import relativedelta
 
-from pms.api import invoice_schedule
+
+from pms.api import getDateMonthDiff
 
 class LeaseContract(Document):
 	
@@ -53,128 +55,213 @@ class LeaseContract(Document):
 		unit=frappe.get_doc("Unit",self.unit_name)
 		if unit.status=="Available":
 			frappe.throw("Unit Agreement cannot be cancelled without having proper leasing agreement ")
-	
 
-@frappe.whitelist()		
+
+@frappe.whitelist()
 def make_lease_payment_schedule(leasedoc):
-	# frappe.msgprint("This is the parameter passed: " + str(leasedoc))
+    lease_contract = frappe.get_doc("Lease Contract", str(leasedoc))
 
-	lease_contract=frappe.get_doc("Lease Contract",str(leasedoc))
+    lease_payment_schedule = []
 
-	item_payment_frequency={
-		"Monthly":1.00,
-		"Quarterly":3.00,
-		"6 months":6.00,
-		"Annually":12.00
-		}
-	idx = 1
-		
+    item_payment_frequency = {
+        "Monthly": 1.00,
+        "Quarterly": 3.00,
+        "6 months": 6.00,
+        "Annually": 12.00
+    }
 
-	if len(lease_contract.lease_item) >= 1 and lease_contract.rent_end_date >= getdate(today()):
+    for lease_item in lease_contract.lease_item:
+        frequency_factor = item_payment_frequency.get(lease_item.frequency)
+        invoice_qty = float(frequency_factor)
 
-		lease_payment_schedule_list = frappe.get_list(
-                "Lease Payment Schedule",
-                fields=["name", "parent", "invoice_number", "date_to_invoice"],
-                filters={
-                    "parent": lease_contract.name,
-                    "date_to_invoice": ("<", lease_contract.rent_start_date),
-                },
-            )
-		
-		for lease_payment_schedule in lease_payment_schedule_list:
-			frappe.delete_doc("Lease Payment Schedule",lease_payment_schedule.name)
+        rent_start_date = lease_contract.rent_start_date
+        rent_end_date = lease_contract.rent_end_date
+        # lease_period_months = (rent_end_date.year - rent_start_date.year) * 12 + rent_end_date.month - rent_start_date.month + 1
 
+        while rent_end_date >= rent_start_date:
+            invoice_period_end = add_days(add_months(rent_start_date, frequency_factor), -1)
+            if invoice_period_end > rent_end_date:
+                invoice_qty = getDateMonthDiff(rent_start_date, rent_end_date, 1)
 
-		lease_payment_schedule_list = frappe.get_list(
-                "Lease Payment Schedule",
-                fields=[
-                    "name",
-                    "parent",
-                    "lease_item",
-                    "invoice_number",
-                    "date_to_invoice",
-                ],
-                filters={"parent": lease_contract.name},
-            )
-		lease_items_list = frappe.get_list(
-                "Lease Items",
-                fields=["name", "parent", "lease_item"],
-                filters={"parent": lease_contract.name},
-            )
-		frappe.msgprint(str(lease_items_list))
-		lease_item_name_list = [
-                lease_item["lease_item"] for lease_item in lease_items_list
-		
-		]
-		for lease_payment_schedule in lease_payment_schedule_list:
-				if lease_payment_schedule.lease_item not in lease_item_name_list:
-					frappe.delete_doc(
-                        "Lease Payment Schedule", lease_payment_schedule.name
-                    )
+            lease_payment_schedule.append({
+                "date_to_invoice": rent_start_date,
+                "lease_item": lease_item.lease_item,
+                "lease_item_name": lease_item.lease_item,
+                "rate": lease_item.amount,
+                "qty": invoice_qty,
+                "paid_by": lease_item.paid_by
+            })
 
-	for item in lease_contract.lease_item:
-				frappe.msgprint("Lease item being processed: " + str(item.lease_item))
-				lease_payment_schedule_list= frappe.get_all(
-						"Lease Payment Schedule",
-						fields=[
-							"name",
-							"parent",
-							"lease_item",
-							"qty",
-							"invoice_number",
-							"date_to_invoice"
-						],
-						filters={"parent":lease_contract.name,"lease_item":item.lease_item},
-						order_by="date_to_invoice",
-					)	
-				frappe.msgprint(str(lease_payment_schedule_list))
+            rent_start_date = add_days(invoice_period_end, 1)
 
-				frequency_factor=item_payment_frequency.get(item.frequency)
-				invoice_qty= float(frequency_factor)
-				end_date=lease_contract.rent_end_date
-				invoice_date= lease_contract.rent_start_date
+    lease_contract.set("lease_payment_schedule", lease_payment_schedule)
+    lease_contract.save()
 
-				if not lease_payment_schedule_list:
-					while end_date>=invoice_date:
-						invoice_period_end=add_days(
-							add_months(invoice_date,frequency_factor),-1
-						)
+    frappe.msgprint("Completed making of invoice schedule.")
 
-						invoice_schedule(
-							invoice_date,
-							item.lease_item,
-							item.paid_by,
-							item.lease_item,
-							lease_contract.name,
-							invoice_qty,
-							item.amount,
-							idx,
-							item.document_type,
-							
-							
-						)
+# def erase_lease_payment_schedule_on_delete(doc, method):
+#     if method == "on_trash":
+#         lease_contract = frappe.get_doc("Lease Contract", doc.parent)
+#         lease_contract.set("lease_payment_schedule", [])
+#         lease_contract.save()
 
-						# lease_payment_schedule = frappe.get_doc({
-              			#   "doctype": "Lease Payment Schedule",
-               			#   "parent": lease_contract.name,
-					 	#   "parenttype":lease_contract,
-                		#   "lease_item": item.lease_item,
-                		# #   "qty": item.qty,
-                		# #   "invoice_number": item.invoice_number,
-                		#   "date_to_invoice": invoice_date,
-           				#  })
-						
-						# lease_payment_schedule.insert(ignore_permissions=True)
-
-						idx+=1
-						invoice_date= add_days(invoice_period_end,1)
+# # Register the trigger function to the "Lease Item" doctype
+# frappe.delete_doc("Lease Item", "on_trash", erase_lease_payment_schedule_on_delete)
 
 
+# @frappe.whitelist()
+# def make_lease_payment_schedule(leasedoc):
+#     lease_contract = frappe.get_doc("Lease Contract", leasedoc)
+
+#     frequency_factors = {
+#         "Monthly": 1,
+#         "Quarterly": 3,
+#         "6 months": 6,
+#         "Annually": 12
+#     }
+
+#     lease_contract.lease_payment_schedule = []
+
+#     for lease_item in lease_contract.lease_item:
+#         frequency_factor = frequency_factors.get(lease_item.frequency, 1)
+#         invoice_qty = float(frequency_factor)
+
+#         rent_start_date = lease_contract.rent_start_date
+#         rent_end_date = lease_contract.rent_end_date
+
+#         # while rent_end_date >= rent_start_date:
+#         #     invoice_period_end = add_days(add_months(rent_start_date, frequency_factor), -1)
+#         #     if invoice_period_end > rent_end_date:
+#         #         invoice_qty = getDateMonthDiff(rent_start_date, rent_end_date, 1)
+#         #     rent_start_date = add_days(invoice_period_end, 1)
+
+#         lease_period_months = (rent_end_date.year - rent_start_date.year) * 12 + rent_end_date.month - rent_start_date.month + 1
+#         num_invoices = lease_period_months // frequency_factor
+
+#         invoice_dates = [rent_start_date + relativedelta(months=i * frequency_factor) for i in range(num_invoices)]
+#         lease_items = [lease_item.lease_item] * num_invoices
+#         lease_item_names = [lease_item.lease_item] * num_invoices
+#         rates = [lease_item.amount] * num_invoices
+#         qtys = [invoice_qty] * num_invoices
+#         paid_bys = [lease_item.paid_by] * num_invoices
+
+#         for invoice_date, lease_item, lease_item_name, rate, qty, paid_by in zip(invoice_dates, lease_items, lease_item_names, rates, qtys, paid_bys):
+#             invoice = lease_contract.append('lease_payment_schedule', {})
+#             invoice.date_to_invoice = invoice_date
+#             invoice.lease_item = lease_item
+#             invoice.lease_item_name = lease_item_name
+#             invoice.rate = rate
+#             invoice.qty = qty
+#             invoice.paid_by = paid_by
+
+#     lease_contract.save()
+#     frappe.msgprint("Completed making of invoice schedule.")
+
+
+# @frappe.whitelist()		
+# def make_lease_payment_schedule(leasedoc):
+#  	# frappe.msgprint("This is the parameter passed: " + str(leasedoc))
+
+# 	lease_contract=frappe.get_doc("Lease Contract",str(leasedoc))
+
+# 	# lease_items=lease_contract.lease_item
+
+# 	lease_contract.set('lease_payment_schedule',[])
+
+# 	item_payment_frequency={
+# 		"Monthly":1.00,
+# 		"Quarterly":3.00,
+# 		"6 months":6.00,
+# 		"Annually":12.00
+# 		}
 	
-		
-				
-	# frappe.msgprint("Completed making of invoice schedule.")
+# 	for lease_item in lease_contract.lease_item:
 
-				
+# 		frequency_factor=item_payment_frequency.get(lease_item.frequency)
+# 		invoice_qty = float(frequency_factor)
 
-		
+
+# 		if lease_item.frequency== "Monthly":
+# 			rent_start_date=lease_contract.rent_start_date
+# 			rent_end_date=lease_contract.rent_end_date
+# 			# lease_period_months = (rent_end_date.year - rent_start_date.year) * 12 + rent_end_date.month - rent_start_date.month + 1
+
+# 			while rent_end_date >= rent_start_date:
+# 				invoice_period_end = add_days(add_months(rent_start_date, frequency_factor), -1)
+# 				if invoice_period_end > rent_end_date:
+# 					invoice_qty = getDateMonthDiff(rent_start_date, rent_end_date, 1)
+# 				lease_payment_schedule = lease_contract.append('lease_payment_schedule', {})
+# 				lease_payment_schedule.date_to_invoice = rent_start_date
+# 				lease_payment_schedule.lease_item = lease_item.lease_item
+# 				lease_payment_schedule.lease_item_name = lease_item.lease_item
+# 				lease_payment_schedule.rate = lease_item.amount
+# 				lease_payment_schedule.qty = invoice_qty
+# 				lease_payment_schedule.paid_by = lease_item.paid_by
+# 				rent_start_date = add_days(invoice_period_end, 1)
+
+
+# 		elif lease_item.frequency == "Quarterly":
+# 			rent_start_date=lease_contract.rent_start_date       	
+# 			rent_end_date=lease_contract.rent_end_date
+# 			lease_period_months = (rent_end_date.year - rent_start_date.year) * 12 + rent_end_date.month - rent_start_date.month + 1
+# 			# num_invoices = lease_period_months // 3
+
+# 			while rent_end_date >= rent_start_date:
+# 				invoice_period_end = add_days(add_months(rent_start_date, frequency_factor), -1)
+# 				if invoice_period_end > rent_end_date:
+# 					invoice_qty = getDateMonthDiff(rent_start_date, rent_end_date, 1)
+# 				lease_payment_schedule = lease_contract.append('lease_payment_schedule', {})
+# 				lease_payment_schedule.date_to_invoice = rent_start_date
+# 				lease_payment_schedule.lease_item = lease_item.lease_item
+# 				lease_payment_schedule.lease_item_name = lease_item.lease_item
+# 				lease_payment_schedule.rate = lease_item.amount
+# 				lease_payment_schedule.qty = invoice_qty
+# 				lease_payment_schedule.paid_by = lease_item.paid_by
+# 				rent_start_date = add_days(invoice_period_end, 1)
+
+
+
+# 		elif lease_item.frequency == "6 months":
+# 			rent_start_date=lease_contract.rent_start_date       	
+# 			rent_end_date=lease_contract.rent_end_date
+# 			lease_period_months = (rent_end_date.year - rent_start_date.year) * 12 + rent_end_date.month - rent_start_date.month + 1
+# 			# six_invoices = lease_period_months // 6
+
+# 			while rent_end_date >= rent_start_date:
+# 				invoice_period_end = add_days(add_months(rent_start_date, frequency_factor), -1)
+# 				if invoice_period_end > rent_end_date:
+# 					invoice_qty = getDateMonthDiff(rent_start_date, rent_end_date, 1)
+# 				lease_payment_schedule = lease_contract.append('lease_payment_schedule', {})
+# 				lease_payment_schedule.date_to_invoice = rent_start_date
+# 				lease_payment_schedule.lease_item = lease_item.lease_item
+# 				lease_payment_schedule.lease_item_name = lease_item.lease_item
+# 				lease_payment_schedule.rate = lease_item.amount
+# 				lease_payment_schedule.qty = invoice_qty
+# 				lease_payment_schedule.paid_by = lease_item.paid_by
+# 				rent_start_date = add_days(invoice_period_end, 1)
+
+
+# 		elif lease_item.frequency == "Annually":
+# 			rent_start_date=lease_contract.rent_start_date       	
+# 			rent_end_date=lease_contract.rent_end_date
+# 			lease_period_months = (rent_end_date.year - rent_start_date.year) * 12 + rent_end_date.month - rent_start_date.month + 1
+# 			# six_invoices = lease_period_months // 12
+
+# 			while rent_end_date >= rent_start_date:
+# 				invoice_period_end = add_days(add_months(rent_start_date, frequency_factor), -1)
+# 				if invoice_period_end > rent_end_date:
+# 					invoice_qty = getDateMonthDiff(rent_start_date, rent_end_date, 1)
+# 				lease_payment_schedule = lease_contract.append('lease_payment_schedule', {})
+# 				lease_payment_schedule.date_to_invoice = rent_start_date
+# 				lease_payment_schedule.lease_item = lease_item.lease_item
+# 				lease_payment_schedule.lease_item_name = lease_item.lease_item
+# 				lease_payment_schedule.rate = lease_item.amount
+# 				lease_payment_schedule.qty = invoice_qty
+# 				lease_payment_schedule.paid_by = lease_item.paid_by
+# 				rent_start_date = add_days(invoice_period_end, 1)
+
+# 	lease_contract.save()
+# 	frappe.msgprint("Completed making of invoice schedule.")
+
+
+

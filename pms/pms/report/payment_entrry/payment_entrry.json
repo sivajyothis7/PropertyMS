@@ -1,0 +1,30 @@
+{
+ "add_total_row": 0,
+ "columns": [],
+ "creation": "2023-05-04 09:15:57.268116",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "filters": [],
+ "idx": 0,
+ "is_standard": "Yes",
+ "modified": "2023-05-04 09:22:23.247058",
+ "modified_by": "Administrator",
+ "module": "Pms",
+ "name": "Payment Entrry",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "query": "SELECT pe.name AS 'Payment Entry', \n       pe.posting_date AS 'Posting Date', \n       pe.party_type AS 'Party Type', \n       CASE \n           WHEN pe.party_type = 'Customer' THEN (SELECT c.customer_name FROM tabCustomer c WHERE c.name = pe.party)\n           WHEN pe.party_type = 'Supplier' THEN (SELECT s.supplier_name FROM tabSupplier s WHERE s.name = pe.party)\n           ELSE pe.party \n       END AS 'Party', \n       pe.payment_type AS 'Payment Type', \n       pe.paid_amount AS 'Paid Amount', \n       pe.allocated_amount AS 'Allocated Amount', \n       pe.unallocated_amount AS 'Unallocated Amount', \n       pe.remarks AS 'Remarks'\nFROM `tabPayment Entry` pe\nWHERE pe.docstatus = 1 \n  AND IFNULL(pe.is_return, 0) = 0\n  AND (%(from_date)s IS NULL OR pe.posting_date >= %(from_date)s)\n  AND (%(to_date)s IS NULL OR pe.posting_date <= %(to_date)s)\n  AND (%(payment_type)s IS NULL OR pe.payment_type = %(payment_type)s)\nORDER BY pe.posting_date DESC;\n",
+ "ref_doctype": "Payment Entry",
+ "report_name": "Payment Entrry",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "Accounts User"
+  },
+  {
+   "role": "Accounts Manager"
+  }
+ ]
+}
