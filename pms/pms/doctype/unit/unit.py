@@ -5,12 +5,13 @@ import frappe
 from frappe.model.document import Document
 
 class Unit(Document):
-	def validate(self):
-		if self.status=="Available":
+    pass
+	# def validate(self):
+	# 	if self.status=="Available":
 
-			property_add=frappe.get_doc("Properties",self.property)
-			property_add.append("property_units",{"unit_name":self.name,
-												"unit_status":self.status
+	# 		property_add=frappe.get_doc("Properties",self.property)
+	# 		property_add.append("property_units",{"unit_name":self.name,
+	# 											"unit_status":self.status
 
-			})
-			property_add.save(ignore_version=True)
+	# 		})
+	# 		property_add.save(ignore_version=True)
