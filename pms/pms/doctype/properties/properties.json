@@ -176,6 +176,7 @@
   {
    "fieldname": "property_units",
    "fieldtype": "Table",
+   "hidden": 1,
    "in_standard_filter": 1,
    "label": "Property Units",
    "options": "Property Units"
@@ -183,7 +184,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-05-03 14:24:48.377400",
+ "modified": "2023-05-26 14:05:41.669328",
  "modified_by": "Administrator",
  "module": "Pms",
  "name": "Properties",
@@ -198,6 +199,8 @@
    "read": 1,
    "report": 1,
    "role": "Administrator",
+   "select": 1,
+   "set_user_permissions": 1,
    "share": 1,
    "write": 1
   },

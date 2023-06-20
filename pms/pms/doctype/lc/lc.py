@@ -7,7 +7,7 @@ from frappe.utils import add_days, today, getdate, add_months, get_datetime, now
 from dateutil.relativedelta import relativedelta
 from pms.api import getDateMonthDiff
 
-class LeaseContract(Document):
+class LC(Document):
 	
 	def validate(self):
 		
@@ -57,7 +57,7 @@ class LeaseContract(Document):
 
 @frappe.whitelist()
 def make_lease_payment_schedule(leasedoc):
-    lease_contract = frappe.get_doc("Lease Contract", str(leasedoc))
+    lc = frappe.get_doc("LC", str(leasedoc))
 
     lease_payment_schedule = []
 
@@ -69,7 +69,7 @@ def make_lease_payment_schedule(leasedoc):
         "Annually": 12.00
     }
 
-    for lease_item in lease_contract.lease_item:
+    for lease_item in lc.lease_item:
         frequency_factor = item_payment_frequency.get(lease_item.frequency)
         
         if lease_item.frequency == "Daily":
@@ -79,8 +79,8 @@ def make_lease_payment_schedule(leasedoc):
             invoice_qty = float(frequency_factor)
             frequency_calculation_function = add_months
 
-        rent_start_date = lease_contract.rent_start_date
-        rent_end_date = lease_contract.rent_end_date
+        rent_start_date = lc.rent_start_date
+        rent_end_date = lc.rent_end_date
 
         while rent_end_date >= rent_start_date:
             if lease_item.frequency == "Daily":
@@ -108,8 +108,8 @@ def make_lease_payment_schedule(leasedoc):
             else:
                 rent_start_date = add_days(invoice_period_end, 1)
 
-    lease_contract.set("lease_payment_schedule", lease_payment_schedule)
-    lease_contract.save()
+    lc.set("lease_payment_schedule", lease_payment_schedule)
+    lc.save()
 
     frappe.msgprint("Completed making of invoice schedule.")
 

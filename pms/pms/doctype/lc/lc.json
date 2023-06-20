@@ -2,7 +2,7 @@
  "actions": [],
  "allow_rename": 1,
  "autoname": "format:{property_name}-{unit_name}",
- "creation": "2023-03-29 14:15:52.315745",
+ "creation": "2023-05-26 09:50:54.447356",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
@@ -58,9 +58,12 @@
    "reqd": 1
   },
   {
-   "fieldname": "notice_period",
-   "fieldtype": "Int",
-   "label": "Notice Period"
+   "fieldname": "lease_customer",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Lease Customer",
+   "options": "Tenant"
   },
   {
    "fieldname": "column_break_s0avw",
@@ -81,12 +84,9 @@
    "reqd": 1
   },
   {
-   "fieldname": "lease_customer",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Lease Customer",
-   "options": "Tenant"
+   "fieldname": "notice_period",
+   "fieldtype": "Int",
+   "label": "Notice Period"
   },
   {
    "fieldname": "lease_unit_details_section",
@@ -171,13 +171,17 @@
    "label": "OTHER LEASE DETAILS"
   },
   {
-   "fieldname": "upload_agreement_proof",
-   "fieldtype": "Attach",
-   "label": "Upload Agreement Proof"
+   "fieldname": "agreement_status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Agreement Status",
+   "options": "Signed agreement received\nAgreement Cancelled"
   },
   {
-   "fieldname": "column_break_ybch2",
-   "fieldtype": "Column Break"
+   "fieldname": "witness_2",
+   "fieldtype": "Data",
+   "label": "Witness 2"
   },
   {
    "default": "0",
@@ -186,14 +190,18 @@
    "label": "Stamp duty paid by tenant"
   },
   {
+   "fieldname": "column_break_ybch2",
+   "fieldtype": "Column Break"
+  },
+  {
    "fieldname": "witness_1",
    "fieldtype": "Data",
    "label": "Witness 1"
   },
   {
-   "fieldname": "witness_2",
-   "fieldtype": "Data",
-   "label": "Witness 2"
+   "fieldname": "upload_agreement_proof",
+   "fieldtype": "Attach",
+   "label": "Upload Agreement Proof"
   },
   {
    "fieldname": "amended_from",
@@ -203,24 +211,25 @@
    "options": "Lease Contract",
    "print_hide": 1,
    "read_only": 1
-  },
-  {
-   "fieldname": "agreement_status",
-   "fieldtype": "Select",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
-   "label": "Agreement Status",
-   "options": "Signed agreement received\nAgreement Cancelled"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-05-26 13:08:35.832921",
+ "modified": "2023-05-26 11:40:46.144035",
  "modified_by": "Administrator",
  "module": "Pms",
- "name": "Lease Contract",
+ "name": "LC",
  "owner": "Administrator",
  "permissions": [
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Tenant",
+   "share": 1
+  },
   {
    "create": 1,
    "delete": 1,
@@ -232,15 +241,6 @@
    "role": "Administrator",
    "share": 1,
    "write": 1
-  },
-  {
-   "email": 1,
-   "export": 1,
-   "print": 1,
-   "read": 1,
-   "report": 1,
-   "role": "Tenant",
-   "share": 1
   }
  ],
  "sort_field": "modified",
