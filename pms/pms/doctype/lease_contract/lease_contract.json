@@ -54,8 +54,7 @@
    "fieldname": "rent_start_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Rent Start Date",
-   "reqd": 1
+   "label": "Rent Start Date"
   },
   {
    "fieldname": "notice_period",
@@ -70,15 +69,13 @@
    "fieldname": "writing_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Writing Date",
-   "reqd": 1
+   "label": "Writing Date"
   },
   {
    "fieldname": "rent_end_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Rent End Date",
-   "reqd": 1
+   "label": "Rent End Date"
   },
   {
    "fieldname": "lease_customer",
@@ -215,7 +212,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-05-26 13:08:35.832921",
+ "modified": "2023-07-19 13:00:28.482889",
  "modified_by": "Administrator",
  "module": "Pms",
  "name": "Lease Contract",
