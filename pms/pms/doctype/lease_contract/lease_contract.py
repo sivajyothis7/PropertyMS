@@ -245,7 +245,7 @@ def make_lease_payment_schedule(leasedoc):
 
 # 			while rent_end_date >= rent_start_date:
 # 				invoice_period_end = add_days(add_months(rent_start_date, frequency_factor), -1)
-# 				if invoice_period_end > rent_end_date:
+# 				if intvoice_period_end > rent_end_date:
 # 					invoice_qty = getDateMonthDiff(rent_start_date, rent_end_date, 1)
 # 				lease_payment_schedule = lease_contract.append('lease_payment_schedule', {})
 # 				lease_payment_schedule.date_to_invoice = rent_start_date
