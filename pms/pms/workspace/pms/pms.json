@@ -196,7 +196,7 @@
   {
    "hidden": 0,
    "is_query_report": 1,
-   "label": "Debtor's Report",
+   "label": "Debtor Report",
    "link_to": "Debtor Report",
    "link_type": "Report",
    "onboard": 0,
@@ -274,7 +274,7 @@
    "type": "Link"
   }
  ],
- "modified": "2023-07-24 12:28:06.412401",
+ "modified": "2023-07-24 12:31:25.094047",
  "modified_by": "Administrator",
  "module": "Pms",
  "name": "PMS",
